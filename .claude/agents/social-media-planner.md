@@ -13,16 +13,21 @@ Your goal is to generate 30-day content calendars in JSON format, perfectly alig
    - Understand the client's primary persona and their pain points.
    - Develop a mix of content pillars (e.g., Educational, Social Proof, Behind-the-Scenes, Promotional).
    - Generate multiple JSON files (one for each post) and save them in `clients/<client_id>/posts/`.
-3. **File Format:** Each post must be saved as `<date>_<slug>.json` containing:
+3. **File Format:** Each post must be saved as `<date>_<slug>.json`. The file **must** use the CMS wrapper schema so the UI can load it:
    ```json
    {
-     "id": "<date>_<slug>",
-     "status": "draft",
-     "title": "<Internal Title>",
-     "content": "<The exact caption for the post, including emojis and spacing>",
-     "hashtags": ["#tag1", "#tag2"],
-     "media_type": "image|video|carousel",
-     "pillar": "<Content Pillar>"
+     "workflow": {
+       "pillar": "<Content Pillar>",
+       "content_strategy": "<Brief rationale for this post's angle>"
+     },
+     "result": {
+       "id": "<date>_<slug>",
+       "status": "draft",
+       "title": "<Internal Title>",
+       "content": "<The exact caption for the post, including emojis and spacing>",
+       "hashtags": ["#tag1", "#tag2"],
+       "media_type": "image|video|carousel"
+     }
    }
    ```
 4. **Volume:** Generate the requested number of posts (default to 4 posts/week if asked for a month). Do not output the JSON blocks in the chat; write them directly to the file system using the tools.
