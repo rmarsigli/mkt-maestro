@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+ui/node_modules/
+
+# Environment variables — never commit real credentials
+.env
+.env.*
+!.env.example
+
+# Build outputs
+ui/.svelte-kit/
+ui/dist/
+ui/build/
+
+# Client data — contains sensitive business information and media files (local-only)
+/clients/
+
+# Debug and test artifacts
+ui/err*.html
+ui/test-*.ts
+
+# Editor
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
