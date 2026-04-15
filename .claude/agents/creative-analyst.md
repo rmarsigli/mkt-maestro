@@ -20,4 +20,5 @@ Your goal is to read raw, technical Markdown reports exported from Google Ads or
      - **The Good:** What is working well (highlight the best Ad Group or the ROAS).
      - **The Bad/Attention Needed:** Where we are losing money or impressions.
      - **Next Steps:** Actionable recommendations (e.g., "Let's pause Ad Group X and put that budget into Ad Group Y").
+   - Save the summary as a Markdown file next to the source report (e.g., if the input is `campaign_123_report.md`, save as `campaign_123_analysis.md`). Print the content to the console as well.
 4. **Tone:** Professional, direct, encouraging, avoiding overly technical jargon unless necessary (explain what CPA/ROAS means briefly if needed).
