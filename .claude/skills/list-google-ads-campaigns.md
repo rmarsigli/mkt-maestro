@@ -1,26 +1,27 @@
 ---
 name: list-google-ads-campaigns
-description: Lists active Google Ads campaigns for a specific client. Use this to check live campaigns, their status, impressions, and cost directly from the Google Ads API.
+description: Lists all Google Ads campaigns for a client with status, budget, bidding strategy, and key metrics.
 ---
 # List Google Ads Campaigns
 
-When the user asks to see or list the Google Ads campaigns for a client:
+When the user asks to see or list campaigns for a client:
 
-1. Identify the client and read `clients/<client_id>/brand.json` to extract `google_ads_id`.
-2. Navigate to the `ui` directory and use the `run_shell_command` to execute a script that imports `getLiveCampaigns` from `src/lib/server/googleAds.ts`.
-3. Example script to run via `bun run` in the `ui` folder:
-   ```bash
-   cat << 'EOF' > test-list.ts
-   import { getLiveCampaigns } from './src/lib/server/googleAds.js';
-   async function run() {
-       try {
-           const res = await getLiveCampaigns('GOOGLE_ADS_ID');
-           console.log(JSON.stringify(res, null, 2));
-       } catch (e) { console.error(e); }
-   }
-   run();
-   EOF
-   bun run test-list.ts
-   rm test-list.ts
+1. Identify the client and read `clients/<client_id>/brand.json` to confirm `google_ads_id`.
+2. Create a temp script at the project root:
+   ```typescript
+   import { ads } from './scripts/lib/ads.ts';
+   const res = await ads.portico.query(`
+     SELECT
+       campaign.id, campaign.name, campaign.status,
+       campaign.bidding_strategy_type,
+       campaign_budget.amount_micros,
+       metrics.impressions, metrics.clicks,
+       metrics.cost_micros, metrics.conversions,
+       metrics.cost_per_conversion
+     FROM campaign
+     ORDER BY campaign.id
+   `);
+   console.log(JSON.stringify(res, null, 2));
    ```
-4. Parse the output and summarize the live campaigns back to the user cleanly.
+3. Run with `bun run <tempfile>.ts` from the project root. Delete after.
+4. Summarize clearly: name, status, budget/day, spend, conversions, CPA.
